@@ -5,7 +5,8 @@ services:
     rootDir: backend
     plan: free
     buildCommand: ./build.sh
-    startCommand: gunicorn config.wsgi:application
+    # long timeout: a plan makes several 1.1s rate-limited Nominatim calls
+    startCommand: gunicorn config.wsgi:application --timeout 120
     healthCheckPath: /api/health
     envVars:
       - key: DJANGO_DEBUG
