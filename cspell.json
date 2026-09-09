@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "dropoff",
+    "FMCSA",
+    "Nominatim",
+    "onduty",
+    "OSRM",
+    "TOTX"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "pnpm-lock.yaml",
+    "*.min.js",
+    "*.svg"
+  ]
+}

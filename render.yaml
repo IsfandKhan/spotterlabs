@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: eld-trip-planner-api   # live service slug: eld-trip-planner-api-qmml
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application
+    healthCheckPath: /api/health
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      # RENDER_EXTERNAL_HOSTNAME is picked up automatically in settings.py.
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://spotterlabs-eld.vercel.app
+      - key: DATABASE_URL
+        fromDatabase:
+          name: eld-trip-planner-db
+          property: connectionString
+
+databases:
+  - name: eld-trip-planner-db
+    plan: free

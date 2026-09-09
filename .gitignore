@@ -1,0 +1,36 @@
+# graphify
+graphify-out/
+
+# python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# django
+backend/db.sqlite3
+backend/staticfiles/
+*.log
+
+# env
+.env
+.env.*
+!.env.example
+
+# node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# editor / OS
+.DS_Store
+.vscode/
+.idea/
+.claude/
+
+# working docs kept out of the repo deliverable
+tool-results/
+
+docs
