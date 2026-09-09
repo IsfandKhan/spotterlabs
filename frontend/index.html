@@ -5,12 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="Plan a truck trip and get FMCSA hours-of-service daily log sheets and a route with rest stops." />
+    <meta
+      name="description"
+      content="Plan a truck trip and get FMCSA hours-of-service daily log sheets and a route with rest stops."
+    />
     <title>ELD Trip Planner</title>
     <script>
       // Default light; apply dark before first paint only if the user chose it.
       try {
-        if (localStorage.getItem("theme") === "dark") document.documentElement.classList.add("dark");
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
       } catch (e) {}
     </script>
   </head>

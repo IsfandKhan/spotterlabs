@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Badge } from "@/components/ui/badge"
-import { Skeleton } from "@/components/ui/skeleton"
-import { api, type TripListRow } from "@/lib/api"
-import { fmtDateTime, fmtHours, fmtMiles } from "@/lib/format"
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+
+import { type TripListRow, api } from '@/lib/api';
+import { fmtDateTime, fmtHours, fmtMiles } from '@/lib/format';
 
 export function History() {
-  const [rows, setRows] = useState<TripListRow[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [rows, setRows] = useState<TripListRow[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     api
       .listTrips()
       .then((r) => setRows(r.results))
-      .catch(() => setError("Could not load history"))
-  }, [])
+      .catch(() => setError('Could not load history'));
+  }, []);
 
   return (
     <div>
@@ -65,7 +66,7 @@ export function History() {
               <div className="shrink-0 text-right font-mono text-xs tabular-nums text-muted-foreground">
                 <div>{fmtMiles(t.total_miles)}</div>
                 <div>
-                  {fmtHours(t.total_drive_hours)} drive · {t.total_days} sheet{t.total_days === 1 ? "" : "s"}
+                  {fmtHours(t.total_drive_hours)} drive · {t.total_days} sheet{t.total_days === 1 ? '' : 's'}
                 </div>
               </div>
             </Link>
@@ -73,5 +74,5 @@ export function History() {
         ))}
       </ul>
     </div>
-  )
+  );
 }

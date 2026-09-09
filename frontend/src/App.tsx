@@ -1,13 +1,14 @@
-import { useState } from "react"
-import { MoonIcon, SunIcon } from "lucide-react"
-import { useTheme } from "next-themes"
-import { NavLink, Outlet } from "react-router-dom"
+import { MoonIcon, SunIcon } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { useState } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
-import { Toaster } from "@/components/ui/sonner"
-import { cn } from "@/lib/utils"
+import { Toaster } from '@/components/ui/sonner';
+
+import { cn } from '@/lib/utils';
 
 const FOCUS_RING =
-  "outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+  'outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background';
 
 function NavItem({ to, children, end }: { to: string; children: React.ReactNode; end?: boolean }) {
   return (
@@ -16,37 +17,37 @@ function NavItem({ to, children, end }: { to: string; children: React.ReactNode;
       end={end}
       className={({ isActive }) =>
         cn(
-          "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+          'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
           FOCUS_RING,
-          isActive ? "bg-secondary text-secondary-foreground" : "text-muted-foreground hover:text-foreground",
+          isActive ? 'bg-secondary text-secondary-foreground' : 'text-muted-foreground hover:text-foreground',
         )
       }
     >
       {children}
     </NavLink>
-  )
+  );
 }
 
 function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme();
   // Seed from the class the inline script in index.html set, so the icon is
   // right on first paint (resolvedTheme is undefined until next-themes mounts).
-  const [domDark] = useState(() => document.documentElement.classList.contains("dark"))
-  const dark = resolvedTheme ? resolvedTheme === "dark" : domDark
+  const [domDark] = useState(() => document.documentElement.classList.contains('dark'));
+  const dark = resolvedTheme ? resolvedTheme === 'dark' : domDark;
 
   return (
     <button
       type="button"
-      aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
-      onClick={() => setTheme(dark ? "light" : "dark")}
+      aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
+      onClick={() => setTheme(dark ? 'light' : 'dark')}
       className={cn(
-        "grid size-8 place-items-center rounded-md text-muted-foreground transition-colors hover:text-foreground",
+        'grid size-8 place-items-center rounded-md text-muted-foreground transition-colors hover:text-foreground',
         FOCUS_RING,
       )}
     >
       {dark ? <SunIcon className="size-4" /> : <MoonIcon className="size-4" />}
     </button>
-  )
+  );
 }
 
 export function App() {
@@ -54,7 +55,7 @@ export function App() {
     <div className="min-h-dvh bg-background text-foreground">
       <header className="border-b border-border">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-          <NavLink to="/" className={cn("flex items-center gap-2 rounded-md", FOCUS_RING)}>
+          <NavLink to="/" className={cn('flex items-center gap-2 rounded-md', FOCUS_RING)}>
             <span className="grid size-7 place-items-center rounded-md bg-primary font-mono text-sm font-bold text-primary-foreground">
               E
             </span>
@@ -80,5 +81,5 @@ export function App() {
       </footer>
       <Toaster position="top-center" />
     </div>
-  )
+  );
 }

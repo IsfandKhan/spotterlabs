@@ -1,32 +1,33 @@
-import { useEffect, useState } from "react"
-import { Link, useLocation, useParams } from "react-router-dom"
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
-import { LogSheet } from "@/components/LogSheet"
-import { RouteMap } from "@/components/RouteMap"
-import { StopTimeline } from "@/components/StopTimeline"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { api, ApiError, type TripPlan } from "@/lib/api"
-import { DUTY_HEX } from "@/lib/colors"
-import { fmtDate, fmtHours, fmtMiles } from "@/lib/format"
+import { LogSheet } from '@/components/LogSheet';
+import { RouteMap } from '@/components/RouteMap';
+import { StopTimeline } from '@/components/StopTimeline';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
+
+import { ApiError, type TripPlan, api } from '@/lib/api';
+import { DUTY_HEX } from '@/lib/colors';
+import { fmtDate, fmtHours, fmtMiles } from '@/lib/format';
 
 export function TripResult() {
-  const { id } = useParams()
-  const location = useLocation()
-  const preloaded = (location.state as { plan?: TripPlan } | null)?.plan
-  const [plan, setPlan] = useState<TripPlan | null>(preloaded ?? null)
-  const [error, setError] = useState<string | null>(null)
+  const { id } = useParams();
+  const location = useLocation();
+  const preloaded = (location.state as { plan?: TripPlan } | null)?.plan;
+  const [plan, setPlan] = useState<TripPlan | null>(preloaded ?? null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (plan && String(plan.id) === id) return
-    setPlan(null)
+    if (plan && String(plan.id) === id) return;
+    setPlan(null);
     api
       .getTrip(id!)
       .then(setPlan)
-      .catch((e) => setError(e instanceof ApiError ? e.message : "Failed to load trip"))
-  }, [id]) // eslint-disable-line react-hooks/exhaustive-deps
+      .catch((e) => setError(e instanceof ApiError ? e.message : 'Failed to load trip'));
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (error) {
     return (
@@ -34,11 +35,11 @@ export function TripResult() {
         <AlertTitle>Could not load this trip</AlertTitle>
         <AlertDescription>{error}</AlertDescription>
       </Alert>
-    )
+    );
   }
-  if (!plan) return <ResultSkeleton />
+  if (!plan) return <ResultSkeleton />;
 
-  const s = plan.summary
+  const s = plan.summary;
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -61,9 +62,7 @@ export function TripResult() {
       {plan.compliance.ok ? (
         <Alert>
           <AlertTitle>HOS compliant</AlertTitle>
-          <AlertDescription>
-            Every generated log sheet stays within the 11/14/30-min/70-hour limits.
-          </AlertDescription>
+          <AlertDescription>Every generated log sheet stays within the 11/14/30-min/70-hour limits.</AlertDescription>
         </Alert>
       ) : (
         <Alert variant="destructive">
@@ -145,7 +144,7 @@ export function TripResult() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
@@ -154,16 +153,16 @@ function Stat({ label, value }: { label: string; value: string }) {
       <div className="text-xs uppercase tracking-wide text-muted-foreground">{label}</div>
       <div className="mt-0.5 font-mono text-lg font-semibold tabular-nums">{value}</div>
     </div>
-  )
+  );
 }
 
 function Legend() {
   const items: [string, string][] = [
-    ["Off duty", DUTY_HEX.off],
-    ["Sleeper berth", DUTY_HEX.sb],
-    ["Driving", DUTY_HEX.drive],
-    ["On duty (ND)", DUTY_HEX.onduty],
-  ]
+    ['Off duty', DUTY_HEX.off],
+    ['Sleeper berth', DUTY_HEX.sb],
+    ['Driving', DUTY_HEX.drive],
+    ['On duty (ND)', DUTY_HEX.onduty],
+  ];
   return (
     <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
       {items.map(([label, color]) => (
@@ -173,7 +172,7 @@ function Legend() {
         </span>
       ))}
     </div>
-  )
+  );
 }
 
 function ResultSkeleton() {
@@ -188,5 +187,5 @@ function ResultSkeleton() {
       </div>
       <Skeleton className="h-105 w-full" />
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import type { Stop } from "@/lib/api"
-import { DUTY_HEX, STOP_HEX } from "@/lib/colors"
-import { fmtDateTime, fmtHours, fmtMiles } from "@/lib/format"
+import type { Stop } from '@/lib/api';
+import { DUTY_HEX, STOP_HEX } from '@/lib/colors';
+import { fmtDateTime, fmtHours, fmtMiles } from '@/lib/format';
 
 export function StopTimeline({ stops }: { stops: Stop[] }) {
-  if (!stops.length) return <p className="text-sm text-muted-foreground">No intermediate stops — a single continuous run.</p>
+  if (!stops.length) return <p className="text-sm text-muted-foreground">No intermediate stops — a single continuous run.</p>;
 
   return (
     <ol className="relative space-y-0">
@@ -22,11 +22,11 @@ export function StopTimeline({ stops }: { stops: Stop[] }) {
               <span className="shrink-0 font-mono text-xs text-muted-foreground">{fmtHours(s.hours)}</span>
             </div>
             <div className="truncate text-xs text-muted-foreground">
-              {s.location || "en route"} · {fmtMiles(s.mile)} · {fmtDateTime(s.start)}
+              {s.location || 'en route'} · {fmtMiles(s.mile)} · {fmtDateTime(s.start)}
             </div>
           </div>
         </li>
       ))}
     </ol>
-  )
+  );
 }
