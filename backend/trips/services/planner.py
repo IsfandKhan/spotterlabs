@@ -5,6 +5,7 @@ Returns a plain dict (the API response shape). The view persists it.
 
 from __future__ import annotations
 
+import time
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -98,6 +99,10 @@ def plan_trip(inp: PlanInput) -> dict:
 # ── helpers ────────────────────────────────────────────────────────────────
 def _label_locations(segments, geometry, pickup_label, dropoff_label):
     """Reverse-geocode the milepost of every duty-status change (guide §395.8)."""
+    # ponytail: 20s cap on reverse-geocode spend — each miss is a ~1.1s rate-limited
+    # Nominatim call, and a straight-line ocean route has dozens of status changes,
+    # enough to blow the gunicorn worker timeout. Past the budget the milepost keeps "".
+    deadline = time.monotonic() + 20.0
     prev_status = None
     for s in segments:
         if s.status == prev_status:
@@ -107,7 +112,7 @@ def _label_locations(segments, geometry, pickup_label, dropoff_label):
             s.location = pickup_label
         elif s.label in ("Dropoff", "Post-trip inspection"):
             s.location = dropoff_label
-        elif geometry:
+        elif geometry and time.monotonic() < deadline:
             lat, lon = routing.point_at_mile(geometry, s.start_mi)
             s.location = geocode.reverse(lat, lon)
 
