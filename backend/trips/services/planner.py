@@ -134,20 +134,20 @@ def _stops(segments, geometry):
 
 def _notes(params, rt, violations):
     notes = [
-        f"Route {rt.distance_mi:.0f} mi total "
-        f"({params.deadhead_mi:.0f} mi deadhead + {params.loaded_mi:.0f} mi loaded) "
+        f"Route {rt.distance_mi:.0f} miles total "
+        f"({params.deadhead_mi:.0f} mile(s) deadhead + {params.loaded_mi:.0f} mile(s) loaded) "
         f"at ~{rt.avg_speed_mph():.0f} mph.",
         "70 hr / 8 day cycle modeled as a flat debit from the entered "
-        "‘current cycle used’ — hours do not age out mid-trip; only a 34-hour "
-        "restart clears the cycle (see PLAN.md).",
-        "Fuel stop (30 min on duty) every 1,000 mi; 15-min pre-trip and post-trip "
+        "'current cycle used' - hours do not age out mid-trip; only a 34-hour "
+        "restart clears the cycle",
+        "Fuel stop (30 minutes on duty) every 1,000 miles; 15min pre-trip and post-trip "
         "inspection each driving day; 1 hr on duty for pickup and for dropoff.",
     ]
     if params.use_split_sleeper:
         notes.append("Split sleeper berth enabled: 8/2 split (8 hr sleeper + 2 hr off).")
     if rt.is_estimate:
-        notes.append("Routing service unavailable — distances are straight-line "
-                     "estimates ×1.2 at 55 mph.")
+        notes.append("Routing service unavailable - distances are straight line "
+                     "estimates x1.2 at 55 mph.")
     if violations:
         notes.append(f"WARNING: {len(violations)} HOS violation(s) in the generated schedule.")
     return notes

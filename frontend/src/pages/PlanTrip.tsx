@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 import { AddressInput } from '@/components/AddressInput';
+import { RouteLoader } from '@/components/RouteLoader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -62,6 +63,11 @@ export function PlanTrip() {
 
   return (
     <div className="mx-auto max-w-2xl">
+      {busy && (
+        <div className="fixed inset-0 z-50 grid place-items-center bg-background/10 backdrop-blur-sm">
+          <RouteLoader label="Planning route..." />
+        </div>
+      )}
       <div className="mb-6">
         <h1 className="text-xl font-semibold tracking-tight">Plan a trip</h1>
         <p className="mt-1 text-sm text-muted-foreground">

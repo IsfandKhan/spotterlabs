@@ -7,7 +7,7 @@ export const DUTY_HEX = {
   onduty: '#d38a2c',
 } as const;
 
-export const BRAND_HEX = '#2f5ea8';
+export const BRAND_HEX = '#1f7a6e'; // deep teal — matches --primary, keeps contrast on map tiles
 export const DANGER_HEX = '#c0392b';
 export const INK_HEX = '#1c1f24';
 

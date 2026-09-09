@@ -1,5 +1,14 @@
 import { useEffect } from 'react';
-import { CircleMarker, MapContainer, Polyline, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet';
+import {
+  AttributionControl,
+  CircleMarker,
+  MapContainer,
+  Polyline,
+  Popup,
+  TileLayer,
+  Tooltip,
+  useMap,
+} from 'react-leaflet';
 
 import type { Stop, TripPlan } from '@/lib/api';
 import { BRAND_HEX, DUTY_HEX, INK_HEX, STOP_HEX } from '@/lib/colors';
@@ -24,7 +33,15 @@ export function RouteMap({ plan }: { plan: TripPlan }) {
   const stops = plan.stops.filter((s) => s.lat != null && s.lon != null);
 
   return (
-    <MapContainer className="h-105 w-full rounded-lg border border-border" center={endpoints[1]} zoom={5} scrollWheelZoom={false}>
+    <MapContainer
+      className="h-105 w-full rounded-lg border border-border"
+      center={endpoints[1]}
+      zoom={5}
+      scrollWheelZoom={false}
+      attributionControl={false}
+    >
+      {/* OSM credit only — no "Leaflet" prefix (styled small + muted in index.css) */}
+      <AttributionControl prefix={false} position="bottomright" />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"

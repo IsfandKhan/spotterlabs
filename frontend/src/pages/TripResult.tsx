@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
 import { LogSheet } from '@/components/LogSheet';
+import { RouteLoader } from '@/components/RouteLoader';
 import { RouteMap } from '@/components/RouteMap';
 import { StopTimeline } from '@/components/StopTimeline';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import { ApiError, type TripPlan, api } from '@/lib/api';
 import { DUTY_HEX } from '@/lib/colors';
@@ -37,7 +37,7 @@ export function TripResult() {
       </Alert>
     );
   }
-  if (!plan) return <ResultSkeleton />;
+  if (!plan) return <RouteLoader label="Loading trip…" />;
 
   const s = plan.summary;
   return (
@@ -175,17 +175,3 @@ function Legend() {
   );
 }
 
-function ResultSkeleton() {
-  return (
-    <div className="space-y-6">
-      <Skeleton className="h-8 w-80" />
-      <Skeleton className="h-16 w-full" />
-      <div className="grid grid-cols-3 gap-3 lg:grid-cols-6">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="h-16" />
-        ))}
-      </div>
-      <Skeleton className="h-105 w-full" />
-    </div>
-  );
-}
